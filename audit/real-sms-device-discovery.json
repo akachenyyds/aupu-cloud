@@ -1,0 +1,18 @@
+{
+  "scope": "real SMS login and device-list identity comparison; no MQTT verification in this first session",
+  "evidence": {
+    "created_utc": "2026-10-28T12:09:58.786524+00:00",
+    "stage": "complete",
+    "sms_request_attempts": 1,
+    "sms_send_confirmed": true,
+    "login_verified": true,
+    "supported_devices_discovered": 2,
+    "expected_device_count": 2,
+    "matching_device_count": 2,
+    "all_expected_matched": true,
+    "ha_accessed": false,
+    "device_controls_sent": 0,
+    "sensitive_values_persisted": false,
+    "last_event_utc": "2026-10-28T12:19:45.395797+00:00"
+  }
+}

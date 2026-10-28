@@ -31,9 +31,9 @@ def main():
     sys.addaudithook(no_network)
     sys.path.insert(0, str(ROOT / 'tests'))
     sys.path.insert(0, str(ROOT))
-    names = ['test_client', 'test_mqtt', 'test_schedule_duration', 'test_temperature']
+    names = ['test_client', 'test_mqtt', 'test_schedule_duration', 'test_temperature', 'test_auth']
     if not args.unit_only:
-        names.append('test_ha')
+        names.extend(['test_ha', 'test_sms_flow'])
     suite = unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(n) for n in names)
     started = time.monotonic()
     result = unittest.TextTestRunner(verbosity=2).run(suite)

@@ -1,5 +1,5 @@
 {
-  "files_checked": 51,
+  "files_checked": 63,
   "passed": true,
   "issues": [],
   "scope": "bounded static heuristics; no claim to detect all possible secrets"

@@ -1,5 +1,6 @@
 """Manual token setup and reauthorization; no invented automatic account renewal."""
 import logging
+from time import monotonic
 
 import voluptuous as vol
 
@@ -8,6 +9,8 @@ from homeassistant.helpers.selector import TextSelector, TextSelectorConfig, Tex
 
 from .client import AuthenticationError, CloudAPI, CloudError, ShadowSession
 from .mqtt_api import CachedMQTTAPI
+from .auth import (SMSAuthClient, SMSDeliveryUncertain, normalize_phone,
+                   normalize_code, SMS_COOLDOWN_SECONDS, SMS_FLOW_TTL_SECONDS)
 from .lan import normalize_host, normalize_mac
 from .const import (CONF_ACCESS_TOKEN, CONF_DEVICE_ID, DOMAIN, CONF_TRANSPORT,
                     TRANSPORT_REST, TRANSPORT_MQTT, CONF_MQTT_CREDENTIALS,
@@ -58,6 +61,13 @@ class AupuConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     async def async_step_user(self, user_input=None):
+        # Keep programmatic legacy token setup compatible, while offering an
+        # explicit login choice in the UI. Merely opening a flow sends no SMS.
+        if user_input is not None:
+            return await self.async_step_token(user_input)
+        return self.async_show_menu(step_id='user', menu_options=['sms', 'token'])
+
+    async def async_step_token(self, user_input=None):
         errors = {}
         if user_input is not None:
             try:
@@ -76,7 +86,111 @@ class AupuConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 if len(self._devices) == 1:
                     return await self._create(self._devices[0])
                 return await self.async_step_device()
-        return self.async_show_form(step_id="user", data_schema=USER_SCHEMA, errors=errors)
+        return self.async_show_form(step_id="token", data_schema=USER_SCHEMA, errors=errors)
+
+    async def async_step_sms(self, user_input=None):
+        errors = {}
+        if user_input is not None:
+            try:
+                phone = normalize_phone(user_input.get('phone'))
+            except ValueError:
+                errors['base'] = 'invalid_phone'
+            else:
+                now = monotonic()
+                # Shared, memory-only throttle also covers parallel config flows.
+                attempts = self.hass.data.setdefault(DOMAIN + '_sms_requests', {})
+                if now - attempts.get(phone, -SMS_COOLDOWN_SECONDS) < SMS_COOLDOWN_SECONDS:
+                    errors['base'] = 'sms_cooldown'
+                else:
+                    attempts.update({phone: now})
+                    for key, requested in list(attempts.items()):
+                        if now - requested > SMS_FLOW_TTL_SECONDS:
+                            attempts.pop(key, None)
+                    self._sms_phone = phone
+                    self._sms_started = now
+                    self._sms_login_attempts = 0
+                    self._transport = user_input.get(CONF_TRANSPORT, TRANSPORT_MQTT)
+                    self._device_name = user_input.get('device_name', '').strip()
+                    try:
+                        await self.hass.async_add_executor_job(SMSAuthClient().request_code, phone)
+                    except SMSDeliveryUncertain:
+                        # A timeout must not trigger a second SMS. Permit entering
+                        # a code that may already have arrived on the phone.
+                        self._sms_uncertain = True
+                        return await self.async_step_sms_code()
+                    except CloudError:
+                        errors['base'] = 'cannot_send_sms'
+                    else:
+                        self._sms_uncertain = False
+                        return await self.async_step_sms_code()
+        return self.async_show_form(step_id='sms', data_schema=vol.Schema({
+            vol.Required('phone'): TextSelector(TextSelectorConfig(type=TextSelectorType.TEXT)),
+            vol.Optional('device_name'): vol.All(str, vol.Length(max=64)),
+            vol.Optional(CONF_TRANSPORT, default=TRANSPORT_MQTT):
+                vol.In({TRANSPORT_MQTT: 'MQTT', TRANSPORT_REST: 'REST'}),
+        }), errors=errors)
+
+    async def async_step_sms_code(self, user_input=None):
+        if (not getattr(self, '_sms_phone', None) or
+                monotonic() - self._sms_started > SMS_FLOW_TTL_SECONDS):
+            self._sms_phone = None
+            return self.async_abort(reason='sms_flow_expired')
+        errors = {'base': 'sms_delivery_uncertain'} if getattr(self, '_sms_uncertain', False) else {}
+        if user_input is not None:
+            try:
+                code = normalize_code(user_input.get('verification_code'))
+            except ValueError:
+                errors['base'] = 'invalid_sms_code'
+            else:
+                self._sms_login_attempts += 1
+                if self._sms_login_attempts > 5:
+                    self._sms_phone = None
+                    return self.async_abort(reason='sms_attempts_exhausted')
+                try:
+                    token = await self.hass.async_add_executor_job(
+                        SMSAuthClient().login, self._sms_phone, code)
+                except AuthenticationError:
+                    errors['base'] = 'sms_login_rejected'
+                except CloudError:
+                    errors['base'] = 'cannot_connect'
+                else:
+                    try:
+                        devices = await self.hass.async_add_executor_job(_discover, token)
+                    except AuthenticationError:
+                        errors['base'] = 'invalid_auth'
+                    except CloudError:
+                        errors['base'] = 'cannot_connect'
+                    else:
+                        entry = getattr(self, '_sms_reauth_entry', None)
+                        if entry is not None:
+                            device = next((d for d in devices if d['did'] == entry.data[CONF_DEVICE_ID]), None)
+                            if device is None:
+                                errors['base'] = 'wrong_account'
+                            else:
+                                self._sms_phone = None
+                                self._token = token
+                                self._editing_entry = entry
+                                self._chosen_device = device
+                                self._transport = entry.data.get(CONF_TRANSPORT, TRANSPORT_REST)
+                                if self._transport == TRANSPORT_MQTT:
+                                    return await self.async_step_mqtt()
+                                return self.async_update_reload_and_abort(entry, data={
+                                    CONF_ACCESS_TOKEN: token, CONF_DEVICE_ID: entry.data[CONF_DEVICE_ID],
+                                    'device_name': entry.data.get('device_name') or entry.title})
+                        else:
+                            self._sms_phone = None
+                            if not devices:
+                                return self.async_abort(reason='no_devices')
+                            self._token = token
+                            self._devices = devices
+                            self._editing_entry = None
+                            if len(devices) == 1:
+                                return await self._create(devices[0])
+                            return await self.async_step_device()
+        return self.async_show_form(step_id='sms_code', data_schema=vol.Schema({
+            vol.Required('verification_code'): TextSelector(
+                TextSelectorConfig(type=TextSelectorType.PASSWORD)),
+        }), errors=errors)
 
     async def async_step_device(self, user_input=None):
         choices = {d["did"]: f"{d['name']} ({d['did']})" for d in self._devices}
@@ -134,7 +248,11 @@ class AupuConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(step_id="mqtt", data_schema=schema, errors=errors)
 
     async def async_step_reauth(self, entry_data):
-        return await self.async_step_reauth_confirm()
+        return self.async_show_menu(step_id='reauth', menu_options=['reauth_sms', 'reauth_confirm'])
+
+    async def async_step_reauth_sms(self, user_input=None):
+        self._sms_reauth_entry = self._get_reauth_entry()
+        return await self.async_step_sms(user_input)
 
     async def async_step_reauth_confirm(self, user_input=None):
         return await self._replace_token("reauth_confirm", self._get_reauth_entry(), user_input)

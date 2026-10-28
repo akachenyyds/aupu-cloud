@@ -1,0 +1,10 @@
+{
+  "http_status": 200,
+  "status": 1310,
+  "message": "The phone number is empty",
+  "result_present": false,
+  "phone_empty": true,
+  "otp_empty": true,
+  "sms_requested": false,
+  "auth_header_sent": false
+}

@@ -3,12 +3,11 @@
   "config": {
     "step": {
       "user": {
-        "title": "Connect AUPU bathroom heater",
-        "description": "Choose REST or experimental MQTT. An account token is needed for initial discovery. MQTT stores connection credentials and the device LAN IP/MAC; runtime does not use the account token. Long-term credential validity is still being verified.",
-        "data": {
-          "access_token": "Access token",
-          "device_name": "Device name (optional)",
-          "transport": "Control transport"
+        "title": "Choose authentication",
+        "description": "SMS login and cloud MQTT reads/reconnects were verified with two Q360T5-Pro devices. This remains a beta; existing-token setup is retained. Opening the menu sends no SMS.",
+        "menu_options": {
+          "sms": "SMS code (experimental)",
+          "token": "Existing account token"
         }
       },
       "device": {
@@ -38,6 +37,39 @@
           "local_host": "Heater LAN IP",
           "expected_mac": "Heater MAC"
         }
+      },
+      "token": {
+        "title": "Connect AUPU bathroom heater",
+        "description": "Choose REST or experimental MQTT. An account token is needed for initial discovery. MQTT stores connection credentials and the device LAN IP/MAC; runtime does not use the account token. Long-term credential validity is still being verified.",
+        "data": {
+          "access_token": "Access token",
+          "device_name": "Device name (optional)",
+          "transport": "Control transport"
+        }
+      },
+      "sms": {
+        "title": "SMS login (experimental)",
+        "description": "Use the mainland China phone bound to your AUPU account. Submitting requests one SMS, without automatic retries. MQTT setup does not persist your phone, code or account token; REST retains the account token.",
+        "data": {
+          "phone": "Phone number (+86)",
+          "device_name": "Device name (optional)",
+          "transport": "Transport"
+        }
+      },
+      "sms_code": {
+        "title": "Enter verification code",
+        "description": "Enter the six-digit code. The local flow expires after ten minutes and permits five login attempts. A request timeout may still have delivered the SMS.",
+        "data": {
+          "verification_code": "Verification code"
+        }
+      },
+      "reauth": {
+        "title": "Reauthorize AUPU",
+        "description": "Ordinary reconnects reuse cached MQTT credentials. Reauthenticate when credentials are rejected.",
+        "menu_options": {
+          "reauth_sms": "SMS login (experimental)",
+          "reauth_confirm": "New account token"
+        }
       }
     },
     "error": {
@@ -49,13 +81,21 @@
       "icmp_unreachable": "HA received no ICMP reply from the heater.",
       "neighbor_missing": "HA could not read the device neighbor MAC; direct LAN access is required.",
       "neighbor_mismatch": "The IP address has a different MAC than expected.",
-      "local_probe_error": "HA could not execute the LAN check; see the safe error type in its integration log."
+      "local_probe_error": "HA could not execute the LAN check; see the safe error type in its integration log.",
+      "invalid_phone": "Enter an 11-digit mainland China mobile number.",
+      "sms_cooldown": "Wait at least 60 seconds after the last request and check your phone.",
+      "cannot_send_sms": "SMS request rejected; no automatic retry.",
+      "sms_delivery_uncertain": "Delivery is uncertain. Enter the code if it arrived; it was not resent.",
+      "invalid_sms_code": "Enter six digits.",
+      "sms_login_rejected": "SMS login rejected. Check your code and account."
     },
     "abort": {
       "no_devices": "No supported AUPU bathroom heater found.",
       "already_configured": "This device is already configured.",
       "reauth_successful": "Reauthentication successful.",
-      "reconfigure_successful": "Connection reconfigured."
+      "reconfigure_successful": "Connection reconfigured.",
+      "sms_flow_expired": "The local ten-minute login window expired.",
+      "sms_attempts_exhausted": "This login flow has exhausted its attempts."
     }
   }
 }

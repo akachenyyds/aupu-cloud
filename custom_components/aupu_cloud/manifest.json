@@ -1,7 +1,7 @@
 {
   "domain": "aupu_cloud",
   "name": "奥普浴霸云端（实验）",
-  "version": "0.3.0b9",
+  "version": "0.4.0b1",
   "config_flow": true,
   "integration_type": "device",
   "iot_class": "cloud_push",

@@ -1,7 +1,7 @@
 {
   "review_date": "2026-10-28",
-  "status": "local_review_candidate_not_published",
-  "version": "0.3.0b9",
+  "version": "0.4.0b1",
+  "status": "sms_and_cloud_mqtt_verified_beta_source",
   "tests": {
     "suite": "unit_and_real_ha_framework",
     "python": "3.14.2",
@@ -11,53 +11,30 @@
       "icmplib": "3.0.4",
       "voluptuous": "0.16.0"
     },
-    "tests_run": 103,
+    "tests_run": 121,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
     "blocked_network_or_process_attempts": 0,
-    "duration_seconds": 0.683,
+    "duration_seconds": 0.795,
     "passed": true,
     "physical_device_test": false
   },
-  "dependency_consistency": {
-    "pip_check_passed": true,
-    "manifest_matches_requirements": true
-  },
-  "vulnerability_query": {
-    "tool": "pip-audit",
-    "version": "2.10.1",
-    "database": "PyPI advisory API",
-    "direct_dependencies_checked": 2,
-    "known_vulnerabilities_found": 0,
-    "all_transitive_dependencies_audited": false
-  },
-  "originality": {
-    "community_upstream_copy_evidence_found": false,
-    "exhaustive_global_similarity_audit": false,
-    "vendor_app_source_included": false
-  },
-  "privacy": {
-    "scope": "exact known authentication values from two historical private capture files when available, plus identifiers in source tests; no values exported",
-    "historical_private_sources_available": 0,
-    "distinct_private_values_checked": 5,
-    "matching_public_files": [],
-    "passed": true,
-    "credential_values_included": false
-  },
-  "format_checks": {
-    "python_json": true,
-    "service_and_ci_yaml_parsed": true,
-    "translation_keys": true,
-    "local_markdown_links": true
-  },
-  "runtime_python_sources_changed": false,
-  "production_modified": false,
-  "live_device_test_performed": false,
-  "remote_ci_hacs_hassfest_executed": false,
-  "static_public_tree_check": {
-    "passed": true,
-    "issues": 0,
-    "scope": "bounded static heuristics; no claim to detect all possible secrets"
-  }
+  "real_sms_requested": true,
+  "positive_account_login_verified": true,
+  "wechat_device_account_link_verified": true,
+  "automatic_account_refresh_implemented": false,
+  "local_mqtt_implemented": false,
+  "cloud_mqtt_reuses_cached_credentials": true,
+  "production_changed": false,
+  "credential_or_phone_values_included": false,
+  "dependency_vulnerability_report": "prior same-day check of unchanged two direct dependencies, retained separately",
+  "real_mqtt_full_chain_verified": true,
+  "real_verification_report": "real-cloud-mqtt-readonly.json",
+  "lan_online_verified_in_this_session": false,
+  "installed_ha_config_flow_verified": false,
+  "physical_device_control_tested_in_this_session": false,
+  "private_form_and_mqtt_guard_tests_passed": 17,
+  "private_verification_form_stopped": true,
+  "git_merge_target": "main"
 }

@@ -1,0 +1,43 @@
+name: 问题反馈
+description: 提交脱敏的安装、登录或设备问题
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请勿粘贴手机号、验证码、账户令牌、MQTT凭据、真实MAC/设备ID、抓包或完整HA备份。
+        如涉及认证材料，请先按SECURITY.md说明处理，不要在公开Issue上传。
+  - type: input
+    id: environment
+    attributes:
+      label: 版本与安装环境
+      description: HA版本、组件版本及安装方式；不需要家庭网络地址。
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: 浴霸型号
+      description: 只写产品型号，不写设备ID、序列号或MAC。
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: 出现问题的阶段
+      options:
+        - 安装或加载
+        - 短信请求或登录
+        - 设备发现
+        - MQTT或局域网核验
+        - 状态读取或控制
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 复现步骤与结果
+      description: 说明触发方式、预期和实际结果；只附不含私人信息的错误类型或消息。
+    validations:
+      required: true

@@ -1,0 +1,42 @@
+{
+  "scope": "real SMS login, owned-device identity comparison, cloud MQTT GET and own-connection reconnect only",
+  "result": {
+    "created_utc": "2026-10-28T12:30:55.595583+00:00",
+    "stage": "complete",
+    "sms_request_attempts": 1,
+    "sms_send_confirmed": true,
+    "login_verified": true,
+    "supported_devices_discovered": 2,
+    "expected_device_count": 2,
+    "matching_device_count": 2,
+    "all_expected_matched": true,
+    "mqtt_verified": true,
+    "end_to_end_verified": true,
+    "ha_accessed": false,
+    "device_controls_sent": 0,
+    "sensitive_values_persisted": false,
+    "last_event_utc": "2026-10-28T12:36:40.233768+00:00",
+    "mqtt_credentials_obtained": true,
+    "mqtt_credential_requests": 1,
+    "mqtt_connections_started": 4,
+    "mqtt_devices_read": 2,
+    "mqtt_devices_reconnected": 2,
+    "mqtt_matching_queries": 10,
+    "mqtt_get_publishes": 10,
+    "mqtt_non_get_publishes_blocked": 0,
+    "mqtt_other_test_connection_survived": true,
+    "mqtt_controls_sent": 0,
+    "lan_online_verified": false
+  },
+  "method": {
+    "component_version": "0.4.0b1",
+    "used_component_modules": {
+      "auth.py": "33932f29e340469288bc9e223259239d3060c4a954cac15c7af8556be41cf7a1",
+      "client.py": "d7675d43f78e45d459c1ffb4dc5d5f28724b10b30503e6750ff8c95922550a18"
+    },
+    "private_verification_script_sha256": "9da4fc0c8bfcf03b7db380a284957d92ba27d0415db7625cf96081223cb47f4f",
+    "publish_guard": "only the two verified owned-device Shadow GET topics and clientToken-only payloads; other publish blocked",
+    "online_probe": "unknown, not substituted with Shadow reachability",
+    "private_form_sources_included": false
+  }
+}
