@@ -1,8 +1,0 @@
-{
-  "scope": "exact known authentication values from two historical private capture files when available, plus identifiers in source tests; no values exported",
-  "historical_private_sources_available": 0,
-  "distinct_private_values_checked": 5,
-  "matching_public_files": [],
-  "passed": true,
-  "credential_values_included": false
-}

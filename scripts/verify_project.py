@@ -87,6 +87,9 @@ def main():
         for match in re.finditer(r'(?i)(?:[0-9a-f]{2}:){5}[0-9a-f]{2}', text):
             if match.group().lower() not in mac_examples:
                 issue(path, 'non_example_mac', text.count('\n', 0, match.start()) + 1)
+        for match in re.finditer(r'(?<![A-Za-z0-9])1[3-9][0-9]{9}(?![A-Za-z0-9])', text):
+            if match.group() != '13800000000':
+                issue(path, 'non_example_phone', text.count('\n', 0, match.start()) + 1)
         if path.suffix == '.md':
             for match in re.finditer(r'\]\(([^)]+)\)', text):
                 target = match.group(1).split('#')[0]

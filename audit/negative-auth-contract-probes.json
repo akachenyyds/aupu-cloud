@@ -1,0 +1,30 @@
+[
+  {
+    "method": "POST",
+    "path": "/applicationApi/authserver/auth/user/terminal/loginByPhone",
+    "http_status": 400,
+    "response_keys": [
+      "status",
+      "timestamp",
+      "msg"
+    ],
+    "business_status": 400,
+    "message": null,
+    "error": null,
+    "no_personal_or_authentication_data_sent": true
+  },
+  {
+    "method": "GET",
+    "path": "/applicationApi/authserver/auth/user/terminal/smscode",
+    "http_status": 200,
+    "response_keys": [
+      "status",
+      "timestamp",
+      "msg"
+    ],
+    "business_status": 1310,
+    "message": "The phone number is empty",
+    "error": null,
+    "no_personal_or_authentication_data_sent": true
+  }
+]

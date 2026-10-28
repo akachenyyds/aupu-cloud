@@ -17,6 +17,16 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 
+async def start_legacy_token_flow(hass, *args, **kwargs):
+    """Exercise the existing token route through the new authentication menu."""
+    result = await hass.config_entries.flow.async_init(*args, **kwargs)
+    if result['type'] == 'menu':
+        choice = 'reauth_confirm' if result['step_id'] == 'reauth' else 'token'
+        result = await hass.config_entries.flow.async_configure(result['flow_id'],
+            {'next_step_id': choice})
+    return result
+
+
 class HACompatibility(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         self.runtime_root = Path(tempfile.mkdtemp(prefix="ha-fixture-"))
@@ -61,7 +71,7 @@ class HACompatibility(unittest.IsolatedAsyncioTestCase):
             return [device]
 
         with patch.object(self.flow_module, '_discover', discover):
-            result = await self.hass.config_entries.flow.async_init('aupu_cloud', context={'source': 'user'})
+            result = await start_legacy_token_flow(self.hass, 'aupu_cloud', context={'source': 'user'})
             self.assertEqual(result['type'], 'form')
             flow_id = result['flow_id']
             result = await self.hass.config_entries.flow.async_configure(flow_id, {'access_token': 'invalid-test-token'})
@@ -73,10 +83,10 @@ class HACompatibility(unittest.IsolatedAsyncioTestCase):
             original_entry_id = entry.entry_id
             self.assertEqual(entry.data['device_id'], '1001')
 
-            duplicate = await self.hass.config_entries.flow.async_init('aupu_cloud', context={'source': 'user'}, data={'access_token': 'valid-test-token'})
+            duplicate = await start_legacy_token_flow(self.hass, 'aupu_cloud', context={'source': 'user'}, data={'access_token': 'valid-test-token'})
             self.assertEqual(duplicate['reason'], 'already_configured')
 
-            reauth = await self.hass.config_entries.flow.async_init('aupu_cloud', context={'source': 'reauth', 'entry_id': entry.entry_id}, data=dict(entry.data))
+            reauth = await start_legacy_token_flow(self.hass, 'aupu_cloud', context={'source': 'reauth', 'entry_id': entry.entry_id}, data=dict(entry.data))
             self.assertEqual(reauth['step_id'], 'reauth_confirm')
             result = await self.hass.config_entries.flow.async_configure(reauth['flow_id'], {'access_token': 'other-account-test-token'})
             self.assertEqual(result['errors']['base'], 'wrong_account')
@@ -243,7 +253,7 @@ class HACompatibility(unittest.IsolatedAsyncioTestCase):
             return set_property('6',prop,patch_schedule(snapshot['reported']['6']['properties'][prop],mode,changes,warm=warm))
         session.configure_schedule.side_effect = configure_schedule
         with patch.object(self.flow_module, '_discover', return_value=[device]):
-            result = await self.hass.config_entries.flow.async_init('aupu_cloud',
+            result = await start_legacy_token_flow(self.hass, 'aupu_cloud',
                 context={'source': 'user'}, data={'access_token': 'valid-test-token'})
             await self.hass.async_block_till_done()
         entry = result['result']
@@ -499,7 +509,7 @@ class HACompatibility(unittest.IsolatedAsyncioTestCase):
         entries = []
         with patch.object(self.flow_module, '_discover', return_value=devices):
             for did, name in (('1001', 'Test heater A'), ('1002', 'Test heater B')):
-                flow = await self.hass.config_entries.flow.async_init('aupu_cloud', context={'source': 'user'},
+                flow = await start_legacy_token_flow(self.hass, 'aupu_cloud', context={'source': 'user'},
                     data={'access_token': 'valid-test-token', 'device_name': name})
                 self.assertEqual(flow['step_id'], 'device')
                 result = await self.hass.config_entries.flow.async_configure(flow['flow_id'], {'device_id': did})
@@ -507,7 +517,7 @@ class HACompatibility(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(result['result'].unique_id, did)
                 self.assertEqual(result['result'].title, name)
                 await self.hass.async_block_till_done()
-            duplicate = await self.hass.config_entries.flow.async_init('aupu_cloud', context={'source': 'user'},
+            duplicate = await start_legacy_token_flow(self.hass, 'aupu_cloud', context={'source': 'user'},
                 data={'access_token': 'valid-test-token'})
             duplicate = await self.hass.config_entries.flow.async_configure(duplicate['flow_id'], {'device_id': '1001'})
             self.assertEqual(duplicate['reason'], 'already_configured')
@@ -585,7 +595,7 @@ class HACompatibility(unittest.IsolatedAsyncioTestCase):
         prepare = Mock(return_value=auth)
         with patch.object(self.flow_module, '_discover', return_value=[device]), \
              patch.object(self.flow_module, '_prepare_mqtt', prepare):
-            result = await self.hass.config_entries.flow.async_init('aupu_cloud', context={'source': 'user'},
+            result = await start_legacy_token_flow(self.hass, 'aupu_cloud', context={'source': 'user'},
                 data={'access_token': 'setup-test-token', 'transport': 'mqtt', 'device_name': 'Test heater configuration'})
             self.assertEqual(result['step_id'], 'mqtt')
             flow_id = result['flow_id']
@@ -609,7 +619,7 @@ class HACompatibility(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(entry.data['expected_mac'], '02:00:00:00:00:01')
             self.assertEqual(entry.data['mqtt_credentials'], auth)
 
-            reauth = await self.hass.config_entries.flow.async_init('aupu_cloud',
+            reauth = await start_legacy_token_flow(self.hass, 'aupu_cloud',
                 context={'source': 'reauth', 'entry_id': entry_id}, data=dict(entry.data))
             result = await self.hass.config_entries.flow.async_configure(reauth['flow_id'],
                 {'access_token': 'replacement-test-token'})
@@ -621,7 +631,7 @@ class HACompatibility(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(entry.entry_id, entry_id)
             self.assertNotIn('access_token', entry.data)
 
-            switch = await self.hass.config_entries.flow.async_init('aupu_cloud',
+            switch = await start_legacy_token_flow(self.hass, 'aupu_cloud',
                 context={'source': 'reconfigure', 'entry_id': entry_id})
             result = await self.hass.config_entries.flow.async_configure(switch['flow_id'],
                 {'access_token': 'rest-test-token', 'transport': 'rest'})
@@ -631,7 +641,7 @@ class HACompatibility(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(entry.data['access_token'], 'rest-test-token')
             self.assertNotIn('mqtt_credentials', entry.data)
 
-            switch = await self.hass.config_entries.flow.async_init('aupu_cloud',
+            switch = await start_legacy_token_flow(self.hass, 'aupu_cloud',
                 context={'source': 'reconfigure', 'entry_id': entry_id})
             result = await self.hass.config_entries.flow.async_configure(switch['flow_id'],
                 {'access_token': 'mqtt-setup-token', 'transport': 'mqtt'})
@@ -651,7 +661,7 @@ class HACompatibility(unittest.IsolatedAsyncioTestCase):
         auth = {'x-amz-customauthorizer-name': 'a', 'x-amz-customauthorizer-signature': 's', 'tokenKeyName': 't'}
         with patch.object(self.flow_module, '_discover', return_value=[device]), \
              patch.object(self.flow_module, '_prepare_mqtt', return_value=auth):
-            result = await self.hass.config_entries.flow.async_init('aupu_cloud', context={'source': 'user'},
+            result = await start_legacy_token_flow(self.hass, 'aupu_cloud', context={'source': 'user'},
                 data={'access_token': 'setup-only-test-token', 'transport': 'mqtt'})
             result = await self.hass.config_entries.flow.async_configure(result['flow_id'],
                 {'local_host': '10.23.45.67', 'expected_mac': '02:00:00:00:00:01'})

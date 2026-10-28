@@ -3,12 +3,11 @@
   "config": {
     "step": {
       "user": {
-        "title": "连接奥普浴霸",
-        "description": "选择 REST 或实验 MQTT。首次配置都需要账户令牌发现设备。MQTT 模式保存状态连接凭据和浴霸局域网 IP/MAC，日常运行不使用账户令牌；其长期有效性仍在验证。",
-        "data": {
-          "access_token": "访问令牌",
-          "device_name": "设备名称（可选）",
-          "transport": "控制传输方式"
+        "title": "选择登录方式",
+        "description": "短信验证码登录已在两台Q360T5-Pro完成云端只读验证。仍为测试版本，保留已有令牌方式。打开菜单不会发送短信。",
+        "menu_options": {
+          "sms": "手机号验证码（实验）",
+          "token": "已有账户令牌"
         }
       },
       "device": {
@@ -38,6 +37,39 @@
           "local_host": "浴霸局域网 IP",
           "expected_mac": "浴霸 MAC"
         }
+      },
+      "token": {
+        "title": "连接奥普浴霸",
+        "description": "选择 REST 或实验 MQTT。首次配置都需要账户令牌发现设备。MQTT 模式保存状态连接凭据和浴霸局域网 IP/MAC，日常运行不使用账户令牌；其长期有效性仍在验证。",
+        "data": {
+          "access_token": "访问令牌",
+          "device_name": "设备名称（可选）",
+          "transport": "控制传输方式"
+        }
+      },
+      "sms": {
+        "title": "短信登录（实验）",
+        "description": "使用奥普智享家绑定的中国大陆手机号。点击提交会请求发送一条验证码，不会自动重发。MQTT 模式登录后不保存手机号、验证码或账户令牌；REST 模式会保存账户令牌。",
+        "data": {
+          "phone": "手机号（+86）",
+          "device_name": "设备名称（可选）",
+          "transport": "控制传输"
+        }
+      },
+      "sms_code": {
+        "title": "输入短信验证码",
+        "description": "输入刚收到的六位验证码。号码与验证码只用于本次登录；本地流程最多等待十分钟、最多提交五次。超时未必代表未发送，请先查看手机，不要立即重复请求。",
+        "data": {
+          "verification_code": "短信验证码"
+        }
+      },
+      "reauth": {
+        "title": "重新授权奥普",
+        "description": "普通断线会复用原 MQTT 凭据。只有凭据被拒绝时才需重新登录。",
+        "menu_options": {
+          "reauth_sms": "短信重新登录（实验）",
+          "reauth_confirm": "输入新账户令牌"
+        }
       }
     },
     "error": {
@@ -49,13 +81,21 @@
       "icmp_unreachable": "HA 未收到浴霸的 ICMP 响应。",
       "neighbor_missing": "HA 无法读取浴霸的邻居 MAC；需要同一局域网。",
       "neighbor_mismatch": "该 IP 的实际 MAC 与填写值不同。",
-      "local_probe_error": "HA 无法执行本机网络检测，请查看组件日志中的错误类型。"
+      "local_probe_error": "HA 无法执行本机网络检测，请查看组件日志中的错误类型。",
+      "invalid_phone": "请输入中国大陆 11 位手机号。",
+      "sms_cooldown": "距离上次请求不足60秒，请先查看手机。",
+      "cannot_send_sms": "短信请求被拒绝，未自动重试。",
+      "sms_delivery_uncertain": "无法确认是否已发送。若已收到，请输入验证码；没有自动重发。",
+      "invalid_sms_code": "请输入六位数字验证码。",
+      "sms_login_rejected": "验证码登录被拒绝，请核对验证码和账户。"
     },
     "abort": {
       "no_devices": "账户中没有受支持的奥普浴霸。",
       "already_configured": "这台浴霸已经配置。",
       "reauth_successful": "重新授权完成。",
-      "reconfigure_successful": "连接配置已更新。"
+      "reconfigure_successful": "连接配置已更新。",
+      "sms_flow_expired": "登录流程已超过本地十分钟期限，请重新开始。",
+      "sms_attempts_exhausted": "本次登录尝试次数已用完，请重新开始。"
     }
   }
 }
