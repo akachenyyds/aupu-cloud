@@ -16,7 +16,7 @@
     "errors": 0,
     "skipped": 0,
     "blocked_network_or_process_attempts": 0,
-    "duration_seconds": 0.795,
+    "duration_seconds": 0.93,
     "passed": true,
     "physical_device_test": false
   },

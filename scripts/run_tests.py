@@ -19,6 +19,13 @@ def main():
     args = parser.parse_args()
     attempts = []
 
+    if not args.unit_only and sys.platform.startswith('linux'):
+        # HA imports ifaddr through its sensor/websocket/network modules.
+        # On Linux its import locates libc with the host's ldconfig utility.
+        # Resolve that system-library dependency before the strict test guard;
+        # integration imports and every test still run with the guard enabled.
+        import ifaddr  # noqa: F401
+
     def no_network(event, event_args):
         if event in ('socket.connect', 'socket.sendto'):
             if event_args[0].family in (socket.AF_INET, socket.AF_INET6):
