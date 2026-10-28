@@ -1,0 +1,63 @@
+{
+  "review_date": "2026-10-28",
+  "status": "local_review_candidate_not_published",
+  "version": "0.3.0b9",
+  "tests": {
+    "suite": "unit_and_real_ha_framework",
+    "python": "3.14.2",
+    "dependencies": {
+      "homeassistant": "2026.9.4",
+      "paho-mqtt": "2.1.0",
+      "icmplib": "3.0.4",
+      "voluptuous": "0.16.0"
+    },
+    "tests_run": 103,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "blocked_network_or_process_attempts": 0,
+    "duration_seconds": 0.683,
+    "passed": true,
+    "physical_device_test": false
+  },
+  "dependency_consistency": {
+    "pip_check_passed": true,
+    "manifest_matches_requirements": true
+  },
+  "vulnerability_query": {
+    "tool": "pip-audit",
+    "version": "2.10.1",
+    "database": "PyPI advisory API",
+    "direct_dependencies_checked": 2,
+    "known_vulnerabilities_found": 0,
+    "all_transitive_dependencies_audited": false
+  },
+  "originality": {
+    "community_upstream_copy_evidence_found": false,
+    "exhaustive_global_similarity_audit": false,
+    "vendor_app_source_included": false
+  },
+  "privacy": {
+    "scope": "exact known authentication values from two historical private capture files when available, plus identifiers in source tests; no values exported",
+    "historical_private_sources_available": 0,
+    "distinct_private_values_checked": 5,
+    "matching_public_files": [],
+    "passed": true,
+    "credential_values_included": false
+  },
+  "format_checks": {
+    "python_json": true,
+    "service_and_ci_yaml_parsed": true,
+    "translation_keys": true,
+    "local_markdown_links": true
+  },
+  "runtime_python_sources_changed": false,
+  "production_modified": false,
+  "live_device_test_performed": false,
+  "remote_ci_hacs_hassfest_executed": false,
+  "static_public_tree_check": {
+    "passed": true,
+    "issues": 0,
+    "scope": "bounded static heuristics; no claim to detect all possible secrets"
+  }
+}

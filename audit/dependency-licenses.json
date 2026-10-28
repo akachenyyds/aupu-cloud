@@ -1,0 +1,82 @@
+{
+  "scope": "metadata and license-file hashes of five directly relevant distributions; not a transitive-license audit",
+  "distributions": [
+    {
+      "name": "paho-mqtt",
+      "version": "2.1.0",
+      "license_expression": null,
+      "license_metadata": "EPL-2.0 OR BSD-3-Clause",
+      "license_classifiers": [
+        "License :: OSI Approved"
+      ],
+      "license_files": [
+        {
+          "path_in_distribution": "paho_mqtt-2.1.0.dist-info/licenses/LICENSE.txt",
+          "sha256": "66408b049249c3bdb0ba1ed285f5422ce67e371d40151bebd4d806af454ffe7c"
+        }
+      ]
+    },
+    {
+      "name": "icmplib",
+      "version": "3.0.4",
+      "license_expression": null,
+      "license_metadata": "GNU Lesser General Public License v3.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)"
+      ],
+      "license_files": [
+        {
+          "path_in_distribution": "icmplib-3.0.4.dist-info/LICENSE",
+          "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118"
+        }
+      ]
+    },
+    {
+      "name": "homeassistant",
+      "version": "2026.9.4",
+      "license_expression": "Apache-2.0",
+      "license_metadata": null,
+      "license_classifiers": [],
+      "license_files": [
+        {
+          "path_in_distribution": "homeassistant-2026.9.4.dist-info/licenses/LICENSE.md",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        },
+        {
+          "path_in_distribution": "homeassistant-2026.9.4.dist-info/licenses/homeassistant/backports/LICENSE.Python",
+          "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf"
+        }
+      ]
+    },
+    {
+      "name": "voluptuous",
+      "version": "0.16.0",
+      "license_expression": null,
+      "license_metadata": "BSD-3-Clause",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "license_files": [
+        {
+          "path_in_distribution": "voluptuous-0.16.0.dist-info/COPYING",
+          "sha256": "247b4976b7a7fa4d89d9587caa5095561eb46dc5457f2279f62a62b5452adea9"
+        }
+      ]
+    },
+    {
+      "name": "pip_audit",
+      "version": "2.10.1",
+      "license_expression": null,
+      "license_metadata": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "license_files": [
+        {
+          "path_in_distribution": "pip_audit-2.10.1.dist-info/licenses/LICENSE",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        }
+      ]
+    }
+  ]
+}

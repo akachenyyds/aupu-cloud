@@ -1,0 +1,17 @@
+{
+  "domain": "aupu_cloud",
+  "name": "奥普浴霸云端（实验）",
+  "version": "0.3.0b9",
+  "config_flow": true,
+  "integration_type": "device",
+  "iot_class": "cloud_push",
+  "requirements": [
+    "paho-mqtt==2.1.0",
+    "icmplib==3.0.4"
+  ],
+  "codeowners": [
+    "@akachenyyds"
+  ],
+  "documentation": "https://github.com/akachenyyds/aupu-cloud",
+  "issue_tracker": "https://github.com/akachenyyds/aupu-cloud/issues"
+}

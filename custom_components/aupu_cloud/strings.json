@@ -1,0 +1,61 @@
+{
+  "title": "AUPU Cloud (Experimental)",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect AUPU bathroom heater",
+        "description": "Choose REST or experimental MQTT. An account token is needed for initial discovery. MQTT stores connection credentials and the device LAN IP/MAC; runtime does not use the account token. Long-term credential validity is still being verified.",
+        "data": {
+          "access_token": "Access token",
+          "device_name": "Device name (optional)",
+          "transport": "Control transport"
+        }
+      },
+      "device": {
+        "title": "Choose a device",
+        "data": {
+          "device_id": "Device"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reauthorize AUPU",
+        "description": "Enter a new account token for the same device. REST replaces its token; MQTT obtains replacement cached credentials without retaining the account token. Existing entities are preserved.",
+        "data": {
+          "access_token": "New access token"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure AUPU connection",
+        "data": {
+          "access_token": "New access token",
+          "transport": "Control transport"
+        }
+      },
+      "mqtt": {
+        "title": "MQTT and LAN verification",
+        "description": "Enter this heater's LAN IPv4 and MAC. HA must be able to receive ICMP replies and read its LAN neighbor MAC. Setup verifies identity and MQTT state without device commands. Keep the IP stable. MQTT still uses AUPU Cloud; credential lifetime testing is incomplete.",
+        "data": {
+          "local_host": "Heater LAN IP",
+          "expected_mac": "Heater MAC"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "The token is invalid or expired.",
+      "cannot_connect": "Cannot connect to AUPU Cloud.",
+      "wrong_account": "This account cannot access the configured device.",
+      "invalid_local_identity": "Enter a valid private IPv4 address and unicast MAC.",
+      "cannot_verify_mqtt": "Cannot verify LAN reachability, expected MAC and MQTT state. Check the addresses, network and credentials.",
+      "icmp_unreachable": "HA received no ICMP reply from the heater.",
+      "neighbor_missing": "HA could not read the device neighbor MAC; direct LAN access is required.",
+      "neighbor_mismatch": "The IP address has a different MAC than expected.",
+      "local_probe_error": "HA could not execute the LAN check; see the safe error type in its integration log."
+    },
+    "abort": {
+      "no_devices": "No supported AUPU bathroom heater found.",
+      "already_configured": "This device is already configured.",
+      "reauth_successful": "Reauthentication successful.",
+      "reconfigure_successful": "Connection reconfigured."
+    }
+  }
+}

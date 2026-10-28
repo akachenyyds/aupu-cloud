@@ -1,0 +1,61 @@
+{
+  "title": "奥普浴霸云端（实验）",
+  "config": {
+    "step": {
+      "user": {
+        "title": "连接奥普浴霸",
+        "description": "选择 REST 或实验 MQTT。首次配置都需要账户令牌发现设备。MQTT 模式保存状态连接凭据和浴霸局域网 IP/MAC，日常运行不使用账户令牌；其长期有效性仍在验证。",
+        "data": {
+          "access_token": "访问令牌",
+          "device_name": "设备名称（可选）",
+          "transport": "控制传输方式"
+        }
+      },
+      "device": {
+        "title": "选择浴霸",
+        "data": {
+          "device_id": "设备"
+        }
+      },
+      "reauth_confirm": {
+        "title": "重新授权奥普账户",
+        "description": "输入可访问原设备的新账户令牌。REST 更新账户令牌；MQTT 重新获取缓存凭据，日常运行仍不保存账户令牌。原实体会保留。",
+        "data": {
+          "access_token": "新访问令牌"
+        }
+      },
+      "reconfigure": {
+        "title": "重新配置奥普连接",
+        "data": {
+          "access_token": "新访问令牌",
+          "transport": "控制传输方式"
+        }
+      },
+      "mqtt": {
+        "title": "设置 MQTT 与局域网核验",
+        "description": "输入所选浴霸的局域网 IP 和 MAC。需要 HA 与浴霸处于可直接核对邻居 MAC 的局域网，且 ICMP 可达；配置时会验证身份、状态连接，不发送设备控制。保持 IP 地址稳定。MQTT 仍依赖奥普云，凭据寿命尚未验证完成。",
+        "data": {
+          "local_host": "浴霸局域网 IP",
+          "expected_mac": "浴霸 MAC"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "访问令牌无效或已到期。",
+      "cannot_connect": "无法连接奥普云服务。",
+      "wrong_account": "这个账户无法访问原来配置的浴霸。",
+      "invalid_local_identity": "请输入正确的私有 IPv4 地址和单播 MAC。",
+      "cannot_verify_mqtt": "无法同时确认浴霸 IP/MAC、网络可达及 MQTT 状态连接，请检查地址、网络和凭据。",
+      "icmp_unreachable": "HA 未收到浴霸的 ICMP 响应。",
+      "neighbor_missing": "HA 无法读取浴霸的邻居 MAC；需要同一局域网。",
+      "neighbor_mismatch": "该 IP 的实际 MAC 与填写值不同。",
+      "local_probe_error": "HA 无法执行本机网络检测，请查看组件日志中的错误类型。"
+    },
+    "abort": {
+      "no_devices": "账户中没有受支持的奥普浴霸。",
+      "already_configured": "这台浴霸已经配置。",
+      "reauth_successful": "重新授权完成。",
+      "reconfigure_successful": "连接配置已更新。"
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "baseline_version": "0.3.0b9",
+  "comparison_scope": "21 component files and 6 test files",
+  "files": [
+    {
+      "path": "custom_components/aupu_cloud/__init__.py",
+      "baseline_sha256": "e03bdeb18be4e51b0a733b3d1dfed8bbd966337d4a73185c034fbb6c87cabd79",
+      "candidate_sha256": "e03bdeb18be4e51b0a733b3d1dfed8bbd966337d4a73185c034fbb6c87cabd79",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/binary_sensor.py",
+      "baseline_sha256": "eaa8964975fdc27b3304a71aba79571f3f94fb1053fcf01df8f3c2d76869227a",
+      "candidate_sha256": "eaa8964975fdc27b3304a71aba79571f3f94fb1053fcf01df8f3c2d76869227a",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/client.py",
+      "baseline_sha256": "d7675d43f78e45d459c1ffb4dc5d5f28724b10b30503e6750ff8c95922550a18",
+      "candidate_sha256": "d7675d43f78e45d459c1ffb4dc5d5f28724b10b30503e6750ff8c95922550a18",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/climate.py",
+      "baseline_sha256": "af1187dd42dca29da48424bb127675aa2377b81bbf8cceaf65189006e1157f32",
+      "candidate_sha256": "af1187dd42dca29da48424bb127675aa2377b81bbf8cceaf65189006e1157f32",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/config_flow.py",
+      "baseline_sha256": "cce971fca1ca8f23f2c07e91cb3038ef96c1c8697ffa2853c62381218b04e655",
+      "candidate_sha256": "cce971fca1ca8f23f2c07e91cb3038ef96c1c8697ffa2853c62381218b04e655",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/const.py",
+      "baseline_sha256": "d56fb51e50e657640894f6c3db86d4743b2f00fe564072b9960d57a217f9912e",
+      "candidate_sha256": "d56fb51e50e657640894f6c3db86d4743b2f00fe564072b9960d57a217f9912e",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/coordinator.py",
+      "baseline_sha256": "a45436e6ab6e638af88fd76baaa248332b6b1f36c24be7d74cbcc2ca6e6edebd",
+      "candidate_sha256": "a45436e6ab6e638af88fd76baaa248332b6b1f36c24be7d74cbcc2ca6e6edebd",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/device_profile.py",
+      "baseline_sha256": "deb940ff830c662f21628f6988345de4ba414c1719a63eba710d891228633288",
+      "candidate_sha256": "deb940ff830c662f21628f6988345de4ba414c1719a63eba710d891228633288",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/entity.py",
+      "baseline_sha256": "0f900cb8f69719a1ee1e549fe6220aa16828e7159196dcf40ed3525125af06d3",
+      "candidate_sha256": "0f900cb8f69719a1ee1e549fe6220aa16828e7159196dcf40ed3525125af06d3",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/lan.py",
+      "baseline_sha256": "5380c8265f4ef9759c4732ccaee7e181017a5f69cd5e820d232cc8280dc1a9a1",
+      "candidate_sha256": "5380c8265f4ef9759c4732ccaee7e181017a5f69cd5e820d232cc8280dc1a9a1",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/light.py",
+      "baseline_sha256": "2c46ee300f5bfd1f05c268c4b3ac0258610bbcbb2c6cc116910276bc7b19c741",
+      "candidate_sha256": "2c46ee300f5bfd1f05c268c4b3ac0258610bbcbb2c6cc116910276bc7b19c741",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/manifest.json",
+      "baseline_sha256": "8b7fef754916b0eaa7b9c9b8507e758987fec299e8976a3e47f179cdebc6e95d",
+      "candidate_sha256": "883207f2f6a079df7de8940b2e87bc6bf78e625d551d6927e1cb77495a6aa085",
+      "original_unchanged": true,
+      "candidate_changed": true
+    },
+    {
+      "path": "custom_components/aupu_cloud/mqtt_api.py",
+      "baseline_sha256": "34a46c356ac33a8220de03094f909782bf8828118014d0fd649fd117f7349401",
+      "candidate_sha256": "34a46c356ac33a8220de03094f909782bf8828118014d0fd649fd117f7349401",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/scene_settings.py",
+      "baseline_sha256": "bfcab90a9817d09bf52f26dc0af1103ff32b2746f1936a23cc4d44f595408d1f",
+      "candidate_sha256": "bfcab90a9817d09bf52f26dc0af1103ff32b2746f1936a23cc4d44f595408d1f",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/select.py",
+      "baseline_sha256": "8bf26bfa94c426c83ebc3677aedda743c99c2ca51a23f5ecbb349e876a1f0f97",
+      "candidate_sha256": "8bf26bfa94c426c83ebc3677aedda743c99c2ca51a23f5ecbb349e876a1f0f97",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/sensor.py",
+      "baseline_sha256": "beec1c9efa559b284144e1f0ce08fee2bd8e75ea5e95ca581c6dfca015ea8a21",
+      "candidate_sha256": "beec1c9efa559b284144e1f0ce08fee2bd8e75ea5e95ca581c6dfca015ea8a21",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/services.yaml",
+      "baseline_sha256": "fadd698cc6be67c26eefdcfb80365daac982c45520386300a57002ed1a612d72",
+      "candidate_sha256": "fadd698cc6be67c26eefdcfb80365daac982c45520386300a57002ed1a612d72",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/strings.json",
+      "baseline_sha256": "ea02eea9eec504476a11a45f9b20a6f6502ee52c9746aa65d11e2bc343dcc260",
+      "candidate_sha256": "ea02eea9eec504476a11a45f9b20a6f6502ee52c9746aa65d11e2bc343dcc260",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/switch.py",
+      "baseline_sha256": "541e69235108c13eb79232fad6da3f508251dc9a86ed95586a311b86b77064b0",
+      "candidate_sha256": "541e69235108c13eb79232fad6da3f508251dc9a86ed95586a311b86b77064b0",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/translations/en.json",
+      "baseline_sha256": "ea02eea9eec504476a11a45f9b20a6f6502ee52c9746aa65d11e2bc343dcc260",
+      "candidate_sha256": "ea02eea9eec504476a11a45f9b20a6f6502ee52c9746aa65d11e2bc343dcc260",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "custom_components/aupu_cloud/translations/zh-Hans.json",
+      "baseline_sha256": "5d5b9a52820ef07c670caca1fd4d6bbc3ef6c32920de113a58d24f131711c20a",
+      "candidate_sha256": "5d5b9a52820ef07c670caca1fd4d6bbc3ef6c32920de113a58d24f131711c20a",
+      "original_unchanged": true,
+      "candidate_changed": false
+    },
+    {
+      "path": "tests/scene_fixtures.py",
+      "baseline_sha256": "a38e9d1a4532d9c8b54d490becd6a0ed1a0e2002f39adfcec1c58005ff2edb44",
+      "candidate_sha256": "4dee400d6be16354d9bfe4471ea07230f338d5a8a44ec5d6a9d74106c2151e62",
+      "original_unchanged": true,
+      "candidate_changed": true
+    },
+    {
+      "path": "tests/test_client.py",
+      "baseline_sha256": "22d670efa720ad48597ed58d6c78fb0f73d45c62940ea5a4948bfb3b6e83e1aa",
+      "candidate_sha256": "a5ff091b8d43d671f75c11c4e008acd24e846384fc078af157b6128fd06d2d9c",
+      "original_unchanged": true,
+      "candidate_changed": true
+    },
+    {
+      "path": "tests/test_ha.py",
+      "baseline_sha256": "936a31e679c4f7283f47c0f5742d61e5225c94a948696c0256efbbf4e7c2a7ac",
+      "candidate_sha256": "6323479071e97b7974f6c49be7c4585bc4238ce6de2c9e0aad686664dfa028d9",
+      "original_unchanged": true,
+      "candidate_changed": true
+    },
+    {
+      "path": "tests/test_mqtt.py",
+      "baseline_sha256": "69a24dc84eaed99e21c8470caf0cbf6154eb10cd4504ebb6a8d1d1780f07eec9",
+      "candidate_sha256": "3eecbc316f2988a333faa6cc2d5a14afe25396dcfbcad042867da4945db0db99",
+      "original_unchanged": true,
+      "candidate_changed": true
+    },
+    {
+      "path": "tests/test_schedule_duration.py",
+      "baseline_sha256": "476b6c6affd07160a185b702f8d6a59cc11aaa918517cae1acba342e22597ee1",
+      "candidate_sha256": "239064d4a3753609cc99f67af69f6420c744a67cea2785fffaf6942502eae194",
+      "original_unchanged": true,
+      "candidate_changed": true
+    },
+    {
+      "path": "tests/test_temperature.py",
+      "baseline_sha256": "1ae13d441477419be557f83f9cac8634b99f06fadc0442136f19f5c518fcc7d6",
+      "candidate_sha256": "1ae13d441477419be557f83f9cac8634b99f06fadc0442136f19f5c518fcc7d6",
+      "original_unchanged": true,
+      "candidate_changed": false
+    }
+  ]
+}

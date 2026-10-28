@@ -1,0 +1,121 @@
+configure_human_scene:
+  name: 配置人感场景
+  description: 选择一个人感场景开关，只填写要修改的参数；保留当前开关和其他场景。
+  target:
+    entity:
+      integration: aupu_cloud
+      domain: switch
+  fields:
+    start:
+      name: 生效开始
+      selector:
+        time: {}
+    end:
+      name: 生效结束
+      selector:
+        time: {}
+    presence_delay_seconds:
+      name: 人在后开启（秒）
+      selector:
+        number:
+          min: 0
+          max: 3600
+          step: 1
+          mode: box
+    absence_delay_seconds:
+      name: 人离后关闭（秒）
+      selector:
+        number:
+          min: 0
+          max: 1200
+          step: 1
+          mode: box
+configure_motion_night_light:
+  name: 配置感应夜灯
+  description: 选择单个感应夜灯配置开关；保留开关状态，小夜灯实际输出保持独立。
+  target:
+    entity:
+      integration: aupu_cloud
+      domain: switch
+  fields:
+    start:
+      name: 生效开始
+      selector:
+        time: {}
+    end:
+      name: 生效结束（可跨午夜）
+      selector:
+        time: {}
+    absence_delay_seconds:
+      name: 人离后关灯（秒）
+      selector:
+        number:
+          min: 0
+          max: 1200
+          step: 1
+          mode: box
+    repeat_days:
+      name: 重复日期
+      description: 至少选择一天；不填写则保留原来的重复日期。
+      selector:
+        select:
+          multiple: true
+          options:
+            - {value: mon, label: 周一}
+            - {value: tue, label: 周二}
+            - {value: wed, label: 周三}
+            - {value: thu, label: 周四}
+            - {value: fri, label: 周五}
+            - {value: sat, label: 周六}
+            - {value: sun, label: 周日}
+configure_schedule:
+  name: 配置浴霸预约
+  description: 选择单个预约开关。保留启用状态及其他预约；换档时保留实际时长，若超过新档位上限需同时填写兼容时长。风档仅用于换气，温度仅用于暖房。
+  target:
+    entity:
+      integration: aupu_cloud
+      domain: switch
+  fields:
+    start:
+      name: 开始时间
+      selector:
+        time: {}
+    repeat_days:
+      name: 重复日期
+      description: 显式传入空列表表示不重复；省略则保留当前日期。
+      selector:
+        select:
+          multiple: true
+          options:
+            - {value: mon, label: 周一}
+            - {value: tue, label: 周二}
+            - {value: wed, label: 周三}
+            - {value: thu, label: 周四}
+            - {value: fri, label: 周五}
+            - {value: sat, label: 周六}
+            - {value: sun, label: 周日}
+    fan_speed:
+      name: 预约换气风档
+      selector:
+        number:
+          min: 1
+          max: 5
+          step: 1
+          mode: box
+    target_temperature:
+      name: 预约暖房目标温度（℃）
+      selector:
+        number:
+          min: 30
+          max: 42
+          step: 1
+          mode: box
+    duration_minutes:
+      name: 预约时长（分钟）
+      description: 10–60 分钟按 10 分钟递增，超过 60 按 30 分钟递增；不得超过所选功能和档位的默认上限。
+      selector:
+        number:
+          min: 10
+          max: 480
+          step: 10
+          mode: box
